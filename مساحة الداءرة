@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>حاسبة مساحة الدائرة</title>
+<style>
+    body {
+        font-family: Arial;
+        background: #f2f2f2;
+        text-align: center;
+        padding: 20px;
+    }
+    .box {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 400px;
+        margin: auto;
+    }
+    input, button {
+        width: 90%;
+        padding: 10px;
+        margin: 5px;
+        font-size: 16px;
+    }
+    button {
+        background: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #1e7e34;
+    }
+    #result {
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>حاسبة مساحة الدائرة</h2>
+
+    <input type="number" id="radius" placeholder="أدخل نصف القطر">
+
+    <button onclick="calculate()">احسب المساحة</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function calculate() {
+    let r = document.getElementById("radius").value;
+    if (r <= 0) {
+        document.getElementById("result").innerText = "أدخل قيمة صحيحة لنصف القطر!";
+        return;
+    }
+    let area = Math.PI * r * r;
+    document.getElementById("result").innerText = 
+        "مساحة الدائرة = " + area.toFixed(2);
+}
+</script>
+
+</body>
+</html>
