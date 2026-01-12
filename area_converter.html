@@ -47,11 +47,13 @@ button:hover {
 <input type="number" id="value" placeholder="أدخل القيمة">
 <br>
 <select id="fromUnit">
+    <option value="mm">مم²</option>
     <option value="cm">سم²</option>
     <option value="m">م²</option>
     <option value="km">كم²</option>
 </select>
 <select id="toUnit">
+    <option value="mm">مم²</option>
     <option value="cm">سم²</option>
     <option value="m">م²</option>
     <option value="km">كم²</option>
@@ -75,20 +77,34 @@ function convert() {
 
     // تحويل كل شيء إلى م² أولاً
     let valueInM = 0;
-    if (from === "cm") valueInM = value / 10000; // سم² → م²
-    else if (from === "m") valueInM = value;     // م² → م²
-    else if (from === "km") valueInM = value * 1000000; // كم² → م²
+    switch(from) {
+        case "mm": valueInM = value / 1000000; break; // مم² → م²
+        case "cm": valueInM = value / 10000; break;   // سم² → م²
+        case "m": valueInM = value; break;           // م² → م²
+        case "km": valueInM = value * 1000000; break; // كم² → م²
+    }
 
     // التحويل إلى الوحدة المطلوبة
     let finalValue = 0;
-    if (to === "cm") finalValue = valueInM * 10000;
-    else if (to === "m") finalValue = valueInM;
-    else if (to === "km") finalValue = valueInM / 1000000;
+    switch(to) {
+        case "mm": finalValue = valueInM * 1000000; break;
+        case "cm": finalValue = valueInM * 10000; break;
+        case "m": finalValue = valueInM; break;
+        case "km": finalValue = valueInM / 1000000; break;
+    }
+
+    // حذف الفاصلة إذا كان عدد صحيح
+    if (Number.isInteger(finalValue)) {
+        finalValue = finalValue.toString();
+    } else {
+        finalValue = finalValue.toFixed(4).replace(/0+$/, '').replace(/\.$/, '');
+    }
 
     document.getElementById("result").innerText =
-        "النتيجة: " + finalValue.toFixed(4) + " " + to + "²";
+        "النتيجة: " + finalValue + " " + to + "²";
 }
 </script>
 
 </body>
 </html>
+
