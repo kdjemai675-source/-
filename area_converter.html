@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>حاسبة المساحات + تحويل الوحدات</title>
+<style>
+body {
+    font-family: Arial;
+    background: #f2f2f2;
+    text-align: center;
+    padding: 20px;
+}
+.box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: auto;
+}
+input, select, button {
+    width: 90%;
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+}
+button {
+    background: #ff6600;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background: #cc5200;
+}
+#result {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>حاسبة المساحات + تحويل الوحدات</h2>
+
+<input type="number" id="value" placeholder="أدخل القيمة">
+<br>
+<select id="fromUnit">
+    <option value="cm">سم²</option>
+    <option value="m">م²</option>
+    <option value="km">كم²</option>
+</select>
+<select id="toUnit">
+    <option value="cm">سم²</option>
+    <option value="m">م²</option>
+    <option value="km">كم²</option>
+</select>
+<br>
+<button onclick="convert()">حول المساحة</button>
+
+<div id="result"></div>
+</div>
+
+<script>
+function convert() {
+    let value = parseFloat(document.getElementById("value").value);
+    let from = document.getElementById("fromUnit").value;
+    let to = document.getElementById("toUnit").value;
+
+    if (isNaN(value) || value <= 0) {
+        document.getElementById("result").innerText = "أدخل قيمة صحيحة!";
+        return;
+    }
+
+    // تحويل كل شيء إلى م² أولاً
+    let valueInM = 0;
+    if (from === "cm") valueInM = value / 10000; // سم² → م²
+    else if (from === "m") valueInM = value;     // م² → م²
+    else if (from === "km") valueInM = value * 1000000; // كم² → م²
+
+    // التحويل إلى الوحدة المطلوبة
+    let finalValue = 0;
+    if (to === "cm") finalValue = valueInM * 10000;
+    else if (to === "m") finalValue = valueInM;
+    else if (to === "km") finalValue = valueInM / 1000000;
+
+    document.getElementById("result").innerText =
+        "النتيجة: " + finalValue.toFixed(4) + " " + to + "²";
+}
+</script>
+
+</body>
+</html>
